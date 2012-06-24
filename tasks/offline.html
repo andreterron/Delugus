@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<title>Delugus</title>
+<base href="../"/>
+<link rel="stylesheet" href="style.css" type = "text/css" />
+<link rel="shortcut icon" href="http://www.delugus.com/favicon.ico" />
+<script type="text/javascript" src="javascript.js"></script>
+<script type="text/javascript" src="tasks/javascript.js"></script>
+<script type="text/javascript">
+<!--
+//tasks[i] = new create_task(i, id, name, effort, stress, day, time, duration, complete, comments, kids);
+tasks[0] = new create_task(0, 0, 'home', null, null, null, null, null, null, null, [1, 3]);
+tasks[1] = new create_task(1, 1, 'develop DeTasks', null, null, null, null, null, null, null, [2]);
+tasks[2] = new create_task(2, 2, 'list view', 4, null, null, null, 0, null, null, null);
+tasks[3] = new create_task(3, 3, 'get a passport', 4, null, null, null, 0, null, null, [4, 5]);
+tasks[4] = new create_task(4, 4, 'research', 2, null, null, null, 0, null, null, null);
+tasks[5] = new create_task(5, 5, 'plan', 4, null, null, null, 0, null, null, null);
+-->
+</script>
+
+</head>
+
+<body id='body' onload='init_tasks()' onresize='resize()'>
+<div class="topbar" id="topbar">
+	<!--div class="contents"-->
+		<a href="http://www.delugus.com" title="Home">
+			<div id="topbar_logo" class='linkdiv'>Delugus</div>
+			<!--table id="topbar_logo" class='linkdiv'>
+				<tr>
+					<!-- TO DO: CRIAR UMA IMAGEM SEM FUNDO td><img src='logo_icon.png' style="width: 30px"></img></td>
+					<td>Delugus</td>
+				</tr>
+			</table-->
+		</a>
+		<!--input id="search" type="text" name="search" value="Search" onblur="blurBox('search', 'Search');" onfocus="focusBox('search');" /-->
+			<form action='logout.php' method='post'>
+				<div id='topbar_userinfo'>
+					<table id='topbar_logintable' style='right: 0px'>
+						<tr>
+							<td>
+								<div class='textdiv' id='topbar_name'>André Terron</div>
+							</td>
+							<td>
+								<div id='division'></div>
+							</td>
+							<td>
+								<a href='http://www.delugus.com/logout.php'>
+									<div class='linkdiv' id='topbar_logout'>Log Out</div>
+								</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</form>
+			<!--table border="1">
+				<tr>
+					<td>row 1, cell 1</td>
+					<td>row 1, cell 2</td>
+				</tr>
+				<tr>
+					<td>row 2, cell 1</td>
+					<td>row 2, cell 2</td>
+				</tr>
+			</table-->
+	<!--/div-->
+</div>
+<div class="topbar"></div>
+<div id='stage' class='fullscreen'></div>
+
+<!-- SIDE BAR -->
+<div id='sidebar'>
+	<div id='sidebar_tabspace'>
+		<table id='sidebar_tabs' cellpadding="0" cellspacing="0" border="0">
+			<tbody>
+				<tr>
+					<td>
+						<div id="sidebar_list_tab" class="activetab" onclick="switch_sidetab(0);" >List</div>
+					</td>
+					<td>
+						<div id="sidebar_view_tab" class="tab" onclick="switch_sidetab(1);" >View</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div id='sidebar_contents' class='sidebar_contents'>
+		<div id='sidebar_bg' class='sidebar_contents'></div>
+		<div id='sidebar_list' class='sidebar_contents_active'>
+			<div>
+				<div style="font-size: 24px">Your Items</div>
+				<table id='sidebar_list_table'>
+					<script type="text/javascript">
+					<!--
+
+					//document.write(tasks.length + " tasks received<br />");
+					for (i = 0; i < tasks.length; i++)
+					{
+						//document.write("<div class='tasklist_item' id='task" + i + "' onclick='view_task(" + i + ");'>" + tasks[i].name + "</div>");
+						document.write("<tr id='sidebar_list_task" + i + "' onclick='view_task(" + i + ");'><td class='sqr'><div class='sidebar_list_color'></div></td><td>" + tasks[i].name + "</td></tr>");
+					}
+
+					</script>
+					<tr id='sidebar_list_task_new' onclick='view_task(-1);'><td class='sqr'>+</td><td>Nova Task</td></tr>
+				</table>
+			</div>
+		</div>
+		<div id='sidebar_view' class='sidebar_contents'>
+			<input id='sidebar_view_name' type='text' value="New Event" />
+			<input id='sidebar_view_effort' type='text' />
+			<div class='button'>
+				<div style="text-align:center;" onclick="save_task()">Save</div>
+			</div>
+		</div>
+	</div>
+	<!--div id='historic'>
+		(php)
+		if ($q_rec != "")
+			echo "QUERY RECEBIDA: " . $q_rec;
+		else
+			echo "NENHUMA QUERY RECEBIDA!";
+		(php end)
+	</div-->
+</div>
+<div>
+</div>
+<div id='infobar'>
+</div>
+
+</body>
+</html>

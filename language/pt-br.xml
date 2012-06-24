@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<language>
+	<home>
+		<deals>
+			<advertise>Anuncie</advertise>
+			<share>Compartilhe</share>
+			<win>Ganhe</win>
+			<description>
+				<advertise>Anuncie algo que você quer vender ou alugar, seja somente para seus amigos, para sua faculdade ou trabalho, ou para todos do site!</advertise>
+				<share>Ofereça e encontre materiais escolares, utilitários para viagens, jogos, acessórios para música e qualquer outro tipo de item que você imaginar!</share>
+				<win>Negocie pagamentos por venda ou empréstimo, por hora, por dia ou da maneira que achar melhor!</win>
+			</description>
+		</deals>
+	</home>
+	
+	<signup>
+		<name>Nome</name>
+		<lastname>Sobrenome</lastname>
+		<password>Senha</password>
+		<confirm>Confirme a senha</confirm>
+		<email>E-mail</email>
+		<birthday>Nascimento</birthday>
+		<gender>Gênero</gender>
+	</signup>
+	<gender>
+		<male>Homem</male>
+		<female>Mulher</female>
+	</gender>
+	<date>
+		<day>Dia</day>
+		<month>Mês</month>
+		<year>Ano</year>
+		<mon>
+			<long>
+				<jan>Janeiro</jan>
+				<feb>Fevereiro</feb>
+				<mar>Março</mar>
+				<apr>Abril</apr>
+				<may>Maio</may>
+				<jun>Junho</jun>
+				<jul>Julho</jul>
+				<aug>Agosto</aug>
+				<sep>Setembro</sep>
+				<oct>Outubro</oct>
+				<nov>Novembro</nov>
+				<dec>Dezembro</dec>
+			</long>
+			<short>
+				<jan>Jan</jan>
+				<fev>Fev</fev>
+				<mar>Mar</mar>
+				<apr>Abr</apr>
+				<may>Mai</may>
+				<jun>Jun</jun>
+				<jul>Jul</jul>
+				<aug>Ago</aug>
+				<sep>Set</sep>
+				<oct>Out</oct>
+				<nov>Nov</nov>
+				<dec>Dez</dec>
+			</short>
+		</mon>
+	</date>
+	<!--text id='home-deals-advertise'>Anuncie</text>
+	<text id='home-deals-share'>Compartilhe</text>
+	<text id='home-deals-win'>Ganhe</text-->
+</language>

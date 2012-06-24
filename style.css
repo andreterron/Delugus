@@ -1,0 +1,705 @@
+/* DEFAULT */
+
+/* z-indexes:
+
+	10 - maincontainer
+	20 - sidebar
+	1000 - .sidebar-container
+	10000 - #topbar
+	
+*/
+
+* {
+	/* ATENCAO! aqui eu defino que qualquer altura ou largura, ja ira incluir o padding e a border! */
+	box-sizing: border-box;
+	-moz-box-sizing: border-box; /* Firefox */
+	-webkit-box-sizing: border-box; /* Safari */
+}
+
+a:visited, a:link, a:hover, a:focus, a:active {
+	color: #1188ff;
+	text-decoration: none;
+}
+
+a:hover, a:active, a:focus {
+	text-decoration: underline;
+}
+
+a.nocolor:visited, a.nocolor:link, a.nocolor:hover, a.nocolor:focus, a.nocolor:active {
+	color: inherit;
+}
+
+body {
+	font-family: Calibri;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	min-width: 976px;
+}
+
+table {
+	border-spacing: 0px;
+	border: 0px;
+	padding: 0px;
+	color: inherit;
+	font-family: inherit;
+}
+
+td {
+	border: 0px;
+	padding: 0px;
+}
+
+form {
+	margin: 0px;
+}
+
+input[type=submit], button {
+	background-color: #cccccc;
+	border: solid 1px #000000;
+	cursor: pointer;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	box-shadow: rgba(255, 255, 255, 0.5) 0px 20px 10px -10px inset;
+	-webkit-box-shadow: rgba(255, 255, 255, 0.5) 0px 20px 10px -10px inset;
+	-moz-box-shadow: rgba(255, 255, 255, 0.5) 0px 20px 10px -10px inset;
+	-ms-box-shadow: rgba(255, 255, 255, 0.5) 0px 20px 10px -10px inset;
+	-o-box-shadow: rgba(255, 255, 255, 0.5) 0px 20px 10px -10px inset;
+}
+
+div {
+	/*float: inherit;*/
+}
+
+input[type=text], input[type=password], select {
+	border-width: 1px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 2px inset;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 1px inset;
+}
+
+/* TOPBAR */
+
+#topbar {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 10000;
+	padding: 0px 24px 0px 24px;
+	box-shadow: rgba(0, 0, 0, 0.5) 0px -3px 20px 10px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px -3px 20px 10px;
+	-moz-box-shadow: rgba(0, 0, 0, 0.5) 0px -3px 20px 10px;
+	-ms-box-shadow: rgba(0, 0, 0, 0.5) 0px -3px 20px 10px;
+	-o-box-shadow: rgba(0, 0, 0, 0.5) 0px -3px 20px 10px;
+}
+
+.topbar {
+	width: 100%;
+	height: 33px;
+	background-color: #444444;
+	color: #dddddd;
+	border-bottom: 1px solid #000000;
+}
+
+.topbar a:visited, .topbar a:link, .topbar a:focus, .topbar a:active {
+	color: #dddddd;
+	text-decoration: none;
+}
+
+.topbar a:hover {
+	color: #ffffff;
+	text-decoration:none;
+}
+
+.topbar .text_input {
+	width: 128px;
+	height: 20px;
+	padding: 1px 0px 1px 0px;
+	border: #cccccc 1px solid;
+	margin: 6px;
+}
+
+.topbar .linkdiv, .topbar .textdiv {
+	/* linkdiv = classe para divs com acoes (ex: links) */
+	display: inline-block;
+	height: 32px;
+	padding: 6px 8px 4px 8px;
+	margin: 0px 2px 0px 2px;
+	text-align: center;
+	font-family: inherit;
+	font-weight: bold;
+	font-size: 16px;
+	background-color: transparent;
+	/*line-height: 30px;
+	vertical-align: middle;*/
+	white-space: normal;
+	vertical-align: top;
+}
+
+.topbar input[type=submit], .topbar button{
+	border: none;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	-ms-box-shadow: none;
+	-o-box-shadow: none;
+}
+
+.topbar .linkdiv:hover, .topbar .linkdiv:focus {
+	background-color: #666666;
+	color: #ffffff;
+}
+
+.topbar :focus {
+	/* desliga o contorno que o chrome coloca ao redor das caixas */
+	outline: none;
+}
+
+#topbar_logo {
+	/*width: 128px;*/
+	/*height: 30px;*/
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	font-size: 24px;
+	/*background-image: url('topbarlogo.png');*/
+	font-weight: bold;
+	padding-top: 2px;
+	padding-bottom: 0px;
+	margin-left: 20px;
+}
+
+#topbar_userinfo {
+	position: absolute;
+	right: 0px;
+	margin-right: 24px;
+}
+
+#topbar_logintable {
+	position: absolute;
+	right: 0px;
+}
+
+#topbar_login {
+	position: static;
+	width: 64px;
+	border: 0px;
+	color: inherit;
+}
+
+#topbar_logout {
+}
+
+#topbar_name {
+	text-align: right;
+}
+
+#topbar_search {
+	width: 100%;
+	/*margin-left: -128px;
+	position: absolute;
+	left: 50%;*/
+	display: block;
+}
+
+#topbar_userphoto {
+	display: inline-block;
+	position: relative;
+	top: -2px;
+	margin-left: 6px;
+}
+
+.division {
+	display: inline-block;
+	width: 1px;
+	/*height: 24px;
+	padding: 0px;
+	margin: 4px 0px 4px 0px;*/
+	background-color: #dddddd;
+}
+
+/* CONTENTS */
+
+.contents-container {
+	width: 100%;
+	padding-left: 256px;
+}
+
+.contents {
+	/*float: left;*/
+	width: 720px;
+	position: relative;
+	left: 50%;
+	margin-left: -360px;
+}
+
+#pagefooter {
+	/*position: absolute;
+	left: 50%;
+	bottom: 0px;*/
+	width: inherit;
+	float: left;
+	padding: 8px 16px 24px 16px;
+	border-top: solid 1px #bbbbbb;
+}
+
+/* HOME */
+
+#home-contents {
+	padding: 32px;
+}
+
+#home-title {
+	font-size: 96px;
+	text-align: center;
+}
+
+#home-right {
+	float: right;
+	width: 337px;
+	padding: 0px 32px 0px 32px;
+	border-left: 1px solid #bbbbbb;
+}
+
+#sidebar-signup input[type=text], #sidebar-signup input[type=password] {
+	width: 100%;
+	margin: 0px;
+}
+
+#sidebar-signup input[type=text], #sidebar-signup input[type=password], #sidebar-signup select {
+	height: 24px;
+	font-size: 12px;
+	padding: 3px 1px 3px 1px;
+}
+
+#sidebar-signup select[name=gender] {
+	width: 100%;
+}
+
+.home-descr-container {
+	height: 240px;
+	position: relative;
+	top: 0px;
+	left: 0px;
+}
+
+.home-descr {
+	padding: 0px 16px 0px 16px;
+	display: inline-block;
+	/*position: absolute;
+	top: 0px;
+	left: 0px;*/
+	vertical-align: top;
+	width: 33%;
+	height: inherit;
+}
+
+/*#home-desc1 {
+	width: 185px;
+}
+
+#home-desc2 {
+	left: 185px;
+}
+
+#home-desc3 {
+	left: 371px;
+}*/
+
+#home-desc2, #home-desc3 {
+	border-left: 1px solid #bbbbbb;
+}
+
+.home-action {
+	width: 100%;
+	text-align: center;
+	font-size: 24px;
+	padding: 4px 0px 8px 0px;
+}
+
+#signup-button {
+	width: 100%;
+	margin: 16px 0px 8px 0px;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+/* total 292px 
+   margin 8px
+   */
+
+#day_birth {
+	width: 56px;
+	margin: 0px 4px 0px 0px;
+}
+
+#month_birth {
+	width: 96px;
+	margin: 0px 4px 0px 0px;
+}
+
+#year_birth {
+	width: 56px;
+}
+
+/* SIDEBAR */
+
+.sidebar-cont {
+	width: 257px;
+	height: 100%;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	border-right: solid 1px #666666;
+	z-index: 1000;
+	background-color: #ffffff;
+	box-shadow: rgba(0, 0, 0, 0.5) -3px 0px 20px 10px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.5) -3px 0px 20px 10px;
+	-moz-box-shadow: rgba(0, 0, 0, 0.5) -3px 0px 20px 10px;
+	-ms-box-shadow: rgba(0, 0, 0, 0.5) -3px 0px 20px 10px;
+	-o-box-shadow: rgba(0, 0, 0, 0.5) -3px 0px 20px 10px;
+}
+
+
+.sidebar {
+	/*position: absolute;
+	left: 0px;
+	top: 0px;
+	background-color: #ff8888;
+	z-index: 20;*/
+	padding: 8px 16px 8px 24px;
+}
+
+.maincontainer {
+	/*float: right;
+	width: 798px;*/
+	/*width: 100%;
+	padding: 0px 0px 0px 160px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 10;*/
+}
+
+.main-col {
+	/*float: none;
+	min-height: 512px;*/
+	/*border-top: none;
+	background-color: #ffffff;*/
+}
+
+.main-info {
+	padding: 0px 0px 0px 0px;
+}
+
+/*.maincontainer {
+	/* post divisor 
+	border-bottom: solid 1px #666666;
+}*/
+
+.userpost, .photopost, .userpost_sep, .main-footer {
+	border-top: solid 1px #666666;
+}
+
+.main-header, .main-info {
+}
+
+.main-header {
+	padding: 16px;
+}
+
+.main-footer {
+	padding: 16px;
+}
+
+.infobar {
+	width: 160px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	background-color: #8888ff;
+}
+
+.userpost {
+	padding: 8px 16px 8px 16px;
+	position: relative;
+}
+
+.photopost {
+	padding: 8px 16px 8px 72px;
+	min-height: 64px;
+	position: relative;
+}
+
+.photo-container {
+	border-radius: 6px;
+	overflow: hidden;
+	border: 1px solid #000000;
+}
+
+.photo-bg {
+	background-color: #ffffff;
+}
+
+.photo-shadow {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px 1px inset;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px 1px inset;
+	-moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px 1px inset;
+	-ms-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px 1px inset;
+	-o-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px 1px inset;
+}
+
+.userpost_sep {
+	padding: 2px 16px 2px 16px;
+	background-color: #bbbbbb;
+}
+
+.userpost-photo {
+	width: 48px;
+	height: 48px;
+	display: block;
+	vertical-align: top;
+	margin-right: 8px;
+	position: absolute;
+	left: 16px;
+}
+
+.userpost-contents {
+	display: inline-block;
+	padding: 0px;
+}
+
+.userpost-contents .userpost-contents {
+	padding: 8px 8px 8px 8px;
+}
+
+.userpost-footer {
+	color: #666666;
+	font-size: 12px;
+}
+
+.main-contents {
+	width: inherit;
+	float: left;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	background-color: #ffffff;
+	border-bottom: 1px solid #666666;
+	/*border-top: none;*/
+}
+
+/* TASKS */
+
+.task-holder {
+	border-radius: 8px;
+	box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px;
+	overflow: hidden;
+	border: solid 1px #5544ff;
+	margin-bottom: 16px;
+}
+
+.task-h-top {
+	border-top: solid 2px #ffffff;
+	background-color: #cceeff;
+	padding: 4px 16px 6px 32px;
+	min-height: 32px;
+}
+
+.task-checkbox {
+	position: absolute;
+	top: 9px;
+	left: 9px;
+	width: 16px;
+	height: 16px;
+	border: solid 1px rgba(0, 0, 0, 0.5);
+	border-radius: 3px;
+	background-color: #ffffff;
+	cursor: pointer;
+	
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 1px inset;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 1px inset;
+	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 1px inset;
+	-ms-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 1px inset;
+	-o-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px 1px inset;
+}
+
+#sidebar {
+	width: 240px;
+	height: 100%;
+	padding: 33px 0px 8px 0px; /* 33 */
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 10;
+	border-right: #666666;
+}
+
+#sidebar, .activetab {
+	/* sidebar color */
+	background-color: #eeeeee;
+}
+
+/* MAIN WINDOWS */
+
+.fullscreen {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+
+div.button {
+	background-color: #dddddd;
+	border: solid 1px #000000;
+	text-align: center;
+	padding: 4px;
+}
+
+/* OTHERS */
+
+.error_msg {
+	margin: 32px;
+	border: solid 1px #ff0000;
+	padding: 8px;
+	background-color: #ffaaaa;
+	text-align: center;
+	font-weight: bold;
+}
+
+.warn_msg {
+	margin: 32px;
+	border: solid 1px #bbbb00;
+	padding: 8px;
+	background-color: #ffee88;
+	text-align: center;
+	font-weight: bold;
+}
+
+.main-info .warn_msg {
+	padding: 2px;
+}
+
+.msg_holder .error_msg, .msg_holder .warn_msg {
+	margin: 0px;
+}
+
+.msg_holder {
+	padding: 32px;
+}
+
+.main-info .msg_holder {
+	padding: 8px 16px 16px 16px;
+}
+
+/* TEMPORARY!! */
+
+#sidebar_tabspace {
+	position: relative;
+	top: 0px; /* 33 + 7 + 2 */
+	padding: 8px 12px 0px 12px;
+	z-index: 20;
+}
+
+.tab, .activetab, #sidebar_tabs {
+	height: 21px;
+}
+
+#sidebar_tabs {
+	width: 100%;
+	table-layout: fixed;
+	text-align: center;
+	z-index: 12;
+}
+
+.tab, .activetab {
+	border: 1px solid #000000;
+	border-bottom: 0px;
+	cursor: pointer;
+}
+
+.tab {
+	z-index: 13;
+	background-color: #888888;
+	border-bottom: 1px solid #000000;
+}
+
+.activetab {
+	z-index: 14;
+}
+
+#sidebar_contents {
+	position: relative;
+	top: -1px; /* 33 + 7 + 2 */
+	border-top: solid 1px #000000;
+	background-color: inherit;
+}
+
+.sidebar_contents, .sidebar_contents_active {
+	width: inherit;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	padding: 8px 16px 0px 16px;
+	background-color: inherit;
+	z-index: 11;
+}
+
+.sidebar_contents_active {
+	z-index: 13;
+}
+
+#sidebar_bg {
+	height: 512px; /* CHANGE ASAP! */
+	z-index: 12;
+}
+
+#sidebar_list_table {
+	width: 100%;
+	border-top: solid 1px #bbbbbb;
+	border-left: solid 1px #bbbbbb;
+	border-right: solid 1px #bbbbbb;
+}
+
+#sidebar_list_table td {
+	/*border-spacing: 1px;
+	border-top: solid 1px #ffffff;
+	border-bottom: solid 1px #bbbbbb;*/
+	height: 18px;
+	background-color: transparent;
+	border-top: solid 1px #ffffff;
+	border-bottom: solid 1px #bbbbbb;
+}
+
+#sidebar_list_table tr {
+	height: 24px;
+	font-size: 18px;
+	background-color: transparent;
+}
+
+#sidebar_list_table .sqr {
+	width: 24px;
+	text-align: center;
+}
+
+.sidebar_list_color {
+	width: 12px;
+	height: 12px;
+	margin: 6px;
+	border: solid 1px #001188;
+	background-color: #7788ff
+}
