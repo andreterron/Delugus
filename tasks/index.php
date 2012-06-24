@@ -121,6 +121,7 @@
 				if (id != -1) {
 					document.write(draw_task(usertasks[id], 2));
 				}
+				setTimeout("window.location.reload();", 10000)
 			</script>
 		</div>
 	</div>
