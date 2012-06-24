@@ -23,7 +23,7 @@
 			}
 		}
 		if(!$flag){
-			// cria nova pasta de ano
+			// cria nova pasta de ano e guarda em $year
 		}
 		
 		$month_begin = read_file_info($year);
