@@ -578,7 +578,7 @@ function dodebug($txt) {
 	//echo $txt . "<br/>";
 }
 
-function create_file($name = null, $owner = null, $folder = null, $attr = array()) {
+function create_file($name = null, $owner = null, $folder = null, $attr = array(), $identifier = "NULL") {
 	global $con;
 	if (!$name || (!$owner && !$folder)) {
 		return 0;
@@ -642,9 +642,9 @@ function create_file($name = null, $owner = null, $folder = null, $attr = array(
 	$creation = gmdate("Y-m-d H:i:s");
 	$folder = $finfo['id'];
 	$query = "INSERT INTO  `tzdelugusdata`.`file` (
-			`id`, `name`, `kids`, `parents`, `type`, `attr`, `privacy`, `owner`, `creation`
+			`id`, `name`, `identifier`, `kids`, `parents`, `type`, `attr`, `privacy`, `owner`, `creation`
 			) VALUES (
-			NULL, '$name', '', '[1]$folder', '$typestr', '$attrstr', '', '$owner', '$creation');";
+			NULL, '$name', '$identifier', '', '[1]$folder', '$typestr', '$attrstr', '', '$owner', '$creation');";
 	dodebug("QUERY: $query");
 	$result = mysql_query($query, $con);
 	if ($result) {
