@@ -29,7 +29,7 @@
 	/*$user_tasks = read_str_array($loguser['tasks']);
 	$l = count($user_tasks);*/
 ?>
-	<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -106,8 +106,6 @@
 		}
 		dbclose();
 	}*/
-	echo "var folderid = " . $folder . ";";
-	echo "var homefolderid = " . $loguser['home'] . ";";
 	echo "\n--></script>";
 ?>
 </head>

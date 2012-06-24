@@ -84,22 +84,7 @@ if (!$loguser || !$user || $user['id'] == $loguser['id'] || isset($_POST['item']
 								print_r($f);
 								echo "<br/><br/><br/>";
 								print_r(read_str_array($f['type']));*/
-								$attr = array();
-								$attr['task'] = array();
-								$bla = create_file('last test', '1', '21', $attr);
-								echo "<br/><br/>$bla<br/><br/>";
-								/*$str = "";
-								echo $str . "<br/>";
-								$str = push_str_array($str, 1);
-								echo $str . "<br/>";
-								$str = push_str_array($str, 2);
-								echo $str . "<br/>";
-								$str = push_str_array($str, 3);
-								echo $str . "<br/>";
-								$str = push_str_array($str, 4);
-								echo $str . "<br/>";
-								$str = push_str_array($str, 5);
-								echo $str . "<br/>";*/
+								print_r($_POST);
 							?>
 						</div>
 					</div>
