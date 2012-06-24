@@ -1,8 +1,8 @@
 <?php
 
-require '../facebook/src/facebook.php'
+require '../facebook/src/facebook.php';
 
-$facebook = new Facebook(array(  'appId'  => '446976568660000',  'secret' => '690d3324140569acf476af951a625f03',  'cookie' => true,));     
+$facebook = new Facebook(array(  'appId'  => '446976568660000',  'secret' => '690d3324140569acf476af951a625f03',  'cookie' => true));     
 $session = $facebook->getSession();     
 $me = null;     
 

@@ -9,8 +9,9 @@ $str_array_maxchar = 255;
 $con_number = 0;
 $con = null;
 $lang = "pt-br";
-$xml_lang = simplexml_load_file("language/$lang.xml");
+$xml_lang = null; //simplexml_load_file("language/$lang.xml");
 $base_url = "http://" . $_SERVER['HTTP_HOST'];
+$debug = false;
 /*$user_browser = get_browser();
 
 Linha acima gera um erro:
@@ -553,6 +554,7 @@ function get_text($path)
 	if (!$path) return;
 	
 	global $xml_lang;
+	if (!$xml_lang) $xml_lang = simplexml_load_file("language/$lang.xml");;
 	$txt = "";
 	$code = "\$txt = htmlentities(\$xml_lang"; /* a funcao htmlentities transforma 'é' em '&eacute;' */
 	foreach ($path as $p)
@@ -575,32 +577,94 @@ function get_photo_name($id)
 }
 
 function dodebug($txt) {
-	//echo $txt . "<br/>";
+	global $debug;
+	if ($debug) {
+		echo $txt . "<br/>";
+	}
+}
+
+function debug_array($ary) {
+	global $debug;
+	if ($debug) {
+		print_r($ary);
+		echo "<br/>";
+	}
+}
+
+function find_file($folder_id = null, $path = array(), $create = false, $return_type = 'id') {
+	/* A partir de uma pasta, procura pelo caminho ($path)
+		$folder_id: pasta pai que comecara a procura
+		$path: array de 'identifier's contendo o caminho que deve ser percorrido a partir da $folder_id
+		$create: flag que diz se a pasta deve ser criada caso nao exista
+			true: cria a pasta caso nao seja encontrada
+			false: nao cria
+		$return_type: indica o que sera retornado
+			'id': retorna o id da pasta encontrada
+			'file': retorna o get_file_info() da pasta
+			'tree': retorna o get_file_tree() da pasta (a pasta e os seus filhos)
+	*/
+	$parent = read_file_info($folder_id);
+	
+	$next_id = $folder_id;
+	$parent = read_file_info($next_id);
+	
+	while ($path) {
+		$search = array_shift($path);
+		if ($parent == null) {
+			// ERRO
+		}
+		$kids = $parent['kids'];
+		$next_id = 0;
+		foreach ($kids as $k) {
+			$kid = read_file_info($k);
+			if ($kid == null) {
+				// ERRO
+			}
+			if ($kid['identifier'] == $search) {
+				$next_id = $k;
+				$parent = $kid
+				break;
+			}
+		}
+		if (!$next_id && $create) {
+			$next_id = create_file('', 0, $parent['id'], array(), $search);
+		}
+		if (!$next_id) {
+			if ($return_type == 'id') {
+				return 0;
+			} else {
+				return null;
+			}
+		}
+	}
+	
+	return $parent;
+	
 }
 
 function create_file($name = null, $owner = null, $folder = null, $attr = array(), $identifier = "NULL") {
 	global $con;
-	if (!$name || (!$owner && !$folder)) {
+	if ((!$name && $identifier == "NULL") || (!$owner && !$folder) {
 		return 0;
 	}
-	dodebug("BEGIN");
+	dodebug("DEBUG: CREATING ITEM: name =  $name; owner = $owner; folder = $folder;");
 	dbconnect();
 	if ($owner) {
-		dodebug("OWNER DEFINED");
+		//dodebug("OWNER DEFINED");
 		// Caso uma pasta não tenha sido definida, escolhe a home do usuário
 		$query = "SELECT `home` FROM `tzdelugusdata`.`users` WHERE `users`.`id` = $owner;";
 		$result = mysql_query($query, $con);
 		if ($result && $uinfo = mysql_fetch_array($result)) {
 			$homefolder = $uinfo['home'];
-			dodebug("USER HOMEFOLDER: $homefolder");
+			//dodebug("USER HOMEFOLDER: $homefolder");
 			if (!$folder) {
-				dodebug("FOLDER NOT DEFINED");
+				//dodebug("FOLDER NOT DEFINED");
 				$folder = $uinfo['home'];
 			}
 		} else {
-			dodebug("USER NOT FOUND");
+			//dodebug("USER NOT FOUND");
 			if (!$folder) {
-				dodebug("FOLDER NOT FOUND EXIT!");
+				//dodebug("FOLDER NOT FOUND EXIT!");
 				dbclose();
 				return 0;
 			} else {
@@ -609,34 +673,34 @@ function create_file($name = null, $owner = null, $folder = null, $attr = array(
 		}
 	}
 	$fid = ($folder != null ? $folder : $homefolder);
-	dodebug("FID = $fid");
+	//dodebug("FID = $fid");
 	// Caso o dono não tenha sido definido, escolhe o dono da pasta
 	$query = "SELECT `id`, `kids`, `owner` FROM `tzdelugusdata`.`file` WHERE `file`.`id` = $fid;";
 	$result = mysql_query($query, $con);
 	if ($result && $finfo = mysql_fetch_array($result)) {
-		dodebug("PARENT FOLDER FOUND");
+		//dodebug("PARENT FOLDER FOUND");
 		if (!$owner) {
-			dodebug("USER NOT DEFINED");
+			//dodebug("USER NOT DEFINED");
 			$owner = $finfo['owner'];
 		}
 	} else {
-		dodebug("PARENT FOLDER NOT FOUND");
+		//dodebug("PARENT FOLDER NOT FOUND");
 		if (!$owner || $fid == $homefolder) {
-			dodebug("USER NOT DEFINED");
+			//dodebug("USER NOT DEFINED");
 			dbclose();
 			return 0;
 		} else  {
-			dodebug("SEARCHING USER HOME FOLDER");
+			//dodebug("SEARCHING USER HOME FOLDER");
 			$folder = $homefolder;
 			$query = "SELECT `id`, `kids`, `owner` FROM `tzdelugusdata`.`file` WHERE `file`.`id` = $folder;";
 			if (!($result && $finfo = mysql_fetch_array($result))) {
-				dodebug("USER HOME FOLDER NOT FOUND");
+				//dodebug("USER HOME FOLDER NOT FOUND");
 				dbclose();
 				return 0;
 			}
 		}
 	}
-	dodebug("PRE-PROCESSING DONE");
+	//dodebug("PRE-PROCESSING DONE");
 	$attrstr = json_encode($attr);
 	$typestr = write_str_array(array_keys($attr));
 	$creation = gmdate("Y-m-d H:i:s");
@@ -645,22 +709,18 @@ function create_file($name = null, $owner = null, $folder = null, $attr = array(
 			`id`, `name`, `identifier`, `kids`, `parents`, `type`, `attr`, `privacy`, `owner`, `creation`
 			) VALUES (
 			NULL, '$name', '$identifier', '', '[1]$folder', '$typestr', '$attrstr', '', '$owner', '$creation');";
-	dodebug("QUERY: $query");
+	dodebug("DEBUG: QUERY: $query");
 	$result = mysql_query($query, $con);
 	if ($result) {
 		$file_id = mysql_insert_id($con);
-		dodebug("INSERTION SUCCEDED! FID = $file_id");
+		//dodebug("INSERTION SUCCEDED! FID = $file_id");
 		$str = push_str_array($finfo['kids'], $file_id);
-		dodebug("KIDS STR B4: " . $finfo['kids']);
-		dodebug("KIDS STR AFTER: $str");
-		dodebug("FOLDER ID: $folder");
 		$query = "UPDATE `tzdelugusdata`.`file` SET `file`.`kids` = '$str' WHERE `file`.`id` = $folder LIMIT 1 ;";
 		$result = mysql_query($query, $con);
 		if (!$result) {
-			dodebug("KIDS UPDATE ERROR!");
+			dodebug("ERROR: KIDS UPDATE ERROR!");
 			//ERRO PURAMENTE DB
 		}
-		dodebug("END OF AAAAAALLLLLL");
 		dbclose();
 		return $file_id;
 	} else {

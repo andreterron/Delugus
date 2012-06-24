@@ -170,7 +170,7 @@ function draw_task(task, depth)
 		//kid = globalid.indexOf(task.kids[i]);
 	}
 	if (depth <= 2 && task.kids.length > 0) {
-		for (i = task.kids.length - 1; i >= 0; i--) {
+		for (i = 0; i < task.kids.length; i++) {
 			kid = globalid.indexOf(task.kids[i]);
 			if (kid == -1) continue;
 			txt += draw_task(usertasks[kid]);
