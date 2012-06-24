@@ -1,3 +1,22 @@
+<?php
+
+require '../facebook/src/facebook.php'
+
+$facebook = new Facebook(array(  'appId'  => '446976568660000',  'secret' => '690d3324140569acf476af951a625f03',  'cookie' => true,));     
+$session = $facebook->getSession();     
+$me = null;     
+
+if($session){     
+ try {     
+  $uid = $facebook->getUser();     
+  $me = $facebook->api('/me');     
+ }     
+ catch(FacebookApiException $e){     
+  error_log($e);     
+ }     
+} 
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,7 +47,7 @@
 
 		<div class="fb-login-button">Login with Facebook</div>
 		
-		<div 
+		<!-- <div 
         class="fb-registration" 
         data-fields="[
 		{'name':'name'},
@@ -37,7 +56,7 @@
 		{'name':'birthday'},
 		{'name':'password'}]" 
         data-redirect-uri="http://www.delugus.com/debug.php">
-		</div>
+		</div> -->
 
     </body>
  </html>

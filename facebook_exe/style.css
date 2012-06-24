@@ -1,0 +1,27 @@
+* {
+	/* ATENCAO! aqui eu defino que qualquer altura ou largura, ja ira incluir o padding e a border! */
+	box-sizing: border-box;
+	-moz-box-sizing: border-box; /* Firefox */
+	-webkit-box-sizing: border-box; /* Safari */
+}
+
+.photo-container {
+	border-radius: 6px;
+	overflow: hidden;
+	border: 1px solid #000000;
+}
+
+.photo-bg {
+	background-color: #ffffff;
+}
+
+.photo-shadow {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px 1px inset;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px 1px inset;
+	-moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px 1px inset;
+	-ms-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px 1px inset;
+	-o-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 4px 1px inset;
+}
