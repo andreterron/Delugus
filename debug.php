@@ -80,10 +80,26 @@ if (!$loguser || !$user || $user['id'] == $loguser['id'] || isset($_POST['item']
 								//0ofzPzNJNOP2gV35-1RPbZLP8zdNYPSDmLVcg8Q
 								//echo htmlentities("André", ENT_COMPAT, "UTF-8");
 								//print_r(read_folder_files(1,'task',true));
-								$f = read_file_info(47);
+								/*$f = read_file_info(47);
 								print_r($f);
 								echo "<br/><br/><br/>";
-								print_r(read_str_array($f['type']));
+								print_r(read_str_array($f['type']));*/
+								$attr = array();
+								$attr['task'] = array();
+								$bla = create_file('last test', '1', '21', $attr);
+								echo "<br/><br/>$bla<br/><br/>";
+								/*$str = "";
+								echo $str . "<br/>";
+								$str = push_str_array($str, 1);
+								echo $str . "<br/>";
+								$str = push_str_array($str, 2);
+								echo $str . "<br/>";
+								$str = push_str_array($str, 3);
+								echo $str . "<br/>";
+								$str = push_str_array($str, 4);
+								echo $str . "<br/>";
+								$str = push_str_array($str, 5);
+								echo $str . "<br/>";*/
 							?>
 						</div>
 					</div>

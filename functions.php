@@ -292,7 +292,7 @@ function userinfo($type = 0, $id = null)
 		$size = count($row_names, 0);
 		
 		// conecta com a database
-		dbconnect();
+		$con = dbconnect();
 		
 		// pega o userid
 		$userid = $_COOKIE['user'];
@@ -572,69 +572,104 @@ function get_photo_name($id)
 	{
 		$id = 0;
 	}
-}ç
+}
+
+function dodebug($txt) {
+	//echo $txt . "<br/>";
+}
 
 function create_file($name = null, $owner = null, $folder = null, $attr = array()) {
+	global $con;
 	if (!$name || (!$owner && !$folder)) {
 		return 0;
 	}
+	dodebug("BEGIN");
 	dbconnect();
 	if ($owner) {
+		dodebug("OWNER DEFINED");
 		// Caso uma pasta não tenha sido definida, escolhe a home do usuário
 		$query = "SELECT `home` FROM `tzdelugusdata`.`users` WHERE `users`.`id` = $owner;";
 		$result = mysql_query($query, $con);
-		if ($result && $uinfo = mysql_fetch_array($result, $con)) {
+		if ($result && $uinfo = mysql_fetch_array($result)) {
 			$homefolder = $uinfo['home'];
-			if (!$folder)
+			dodebug("USER HOMEFOLDER: $homefolder");
+			if (!$folder) {
+				dodebug("FOLDER NOT DEFINED");
 				$folder = $uinfo['home'];
+			}
 		} else {
-			if (!$folder)
+			dodebug("USER NOT FOUND");
+			if (!$folder) {
+				dodebug("FOLDER NOT FOUND EXIT!");
 				dbclose();
 				return 0;
-			else
+			} else {
 				$owner = null;
+			}
 		}
 	}
-	$fid = ($folder ? $folder : $homefolder);
+	$fid = ($folder != null ? $folder : $homefolder);
+	dodebug("FID = $fid");
 	// Caso o dono não tenha sido definido, escolhe o dono da pasta
-	$query = "SELECT `kids`, `owner` FROM `tzdelugusdata`.`file` WHERE `file`.`id` = $fid;";
+	$query = "SELECT `id`, `kids`, `owner` FROM `tzdelugusdata`.`file` WHERE `file`.`id` = $fid;";
 	$result = mysql_query($query, $con);
-	if ($result && $finfo = mysql_fetch_array($result, $con)) {
-		if (!$owner)
+	if ($result && $finfo = mysql_fetch_array($result)) {
+		dodebug("PARENT FOLDER FOUND");
+		if (!$owner) {
+			dodebug("USER NOT DEFINED");
 			$owner = $finfo['owner'];
+		}
 	} else {
+		dodebug("PARENT FOLDER NOT FOUND");
 		if (!$owner || $fid == $homefolder) {
+			dodebug("USER NOT DEFINED");
 			dbclose();
 			return 0;
 		} else  {
+			dodebug("SEARCHING USER HOME FOLDER");
 			$folder = $homefolder;
-			$query = "SELECT `kids`, `owner` FROM `tzdelugusdata`.`file` WHERE `file`.`id` = $folder;";
-			if (!($result && $finfo = mysql_fetch_array($result, $con))) {
+			$query = "SELECT `id`, `kids`, `owner` FROM `tzdelugusdata`.`file` WHERE `file`.`id` = $folder;";
+			if (!($result && $finfo = mysql_fetch_array($result))) {
+				dodebug("USER HOME FOLDER NOT FOUND");
 				dbclose();
 				return 0;
 			}
 		}
 	}
+	dodebug("PRE-PROCESSING DONE");
 	$attrstr = json_encode($attr);
 	$typestr = write_str_array(array_keys($attr));
 	$creation = gmdate("Y-m-d H:i:s");
+	$folder = $finfo['id'];
 	$query = "INSERT INTO  `tzdelugusdata`.`file` (
 			`id`, `name`, `kids`, `parents`, `type`, `attr`, `privacy`, `owner`, `creation`
 			) VALUES (
 			NULL, '$name', '', '[1]$folder', '$typestr', '$attrstr', '', '$owner', '$creation');";
+	dodebug("QUERY: $query");
 	$result = mysql_query($query, $con);
 	if ($result) {
-		$str = push_str_array($finfo['kids'], $f_id);
-		$query = "UPDATE `tzdelugusdata`.`task` SET `fileid` = '" . $f_id . "' WHERE `task`.`id` = '" . $t_id . "' LIMIT 1;";
+		$file_id = mysql_insert_id($con);
+		dodebug("INSERTION SUCCEDED! FID = $file_id");
+		$str = push_str_array($finfo['kids'], $file_id);
+		dodebug("KIDS STR B4: " . $finfo['kids']);
+		dodebug("KIDS STR AFTER: $str");
+		dodebug("FOLDER ID: $folder");
+		$query = "UPDATE `tzdelugusdata`.`file` SET `file`.`kids` = '$str' WHERE `file`.`id` = $folder LIMIT 1 ;";
 		$result = mysql_query($query, $con);
-		if ($result) {
+		if (!$result) {
+			dodebug("KIDS UPDATE ERROR!");
+			//ERRO PURAMENTE DB
+		}
+		dodebug("END OF AAAAAALLLLLL");
 		dbclose();
-		return mysql_insert_id($con);
+		return $file_id;
 	} else {
+		dodebug("ERROR AT CREATION");
 		// ERRO DB
 		dbclose();
 		return 0;
 	}
+	dodebug("WEIRD ERROR");
 	dbclose();
 	return 0;
 }

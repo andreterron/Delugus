@@ -9,6 +9,7 @@
 	
 	/* codigo geral para todas as paginas */
 	include_once("functions.php");
+	$loguser = userinfo(-1);
 
 	$xml_top = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>";
 	$xml_top .= "<detask>";
@@ -29,29 +30,30 @@
 	$xml_bot = "</detask>";
 	
 	/* CODIGOS ESPECIFICOS */
-	
+	dodebug("START!");
 	if (isset($_GET['action']))
 	{
+		dodebug("ACTION = " . $_GET['action']);
 		if ($_GET['action'] == 'create' && isset($_GET['name']) && isset($_GET['folder']))
 		{
-			
-			dbconnect();
+			dodebug("NAME = " . $_GET['name']);
+			dodebug("FOLDER = " . $_GET['folder']);
 			$attr = array();
 			$attr['task'] = array();
 			$fid = create_file($_GET['name'], $loguser['id'], $_GET['folder'], $attr);
 			echo $xml_top;
 			if ($fid != 0) {
-					echo "<action>create</action>";
-					echo "<result>1</result>";
-					echo "<fileid>$f_id</fileid>";
-					echo "<taskid>$t_id</taskid>";
+				dodebug("ID FOUND = " . $fid);
+				echo "<action>create</action>";
+				echo "<result>1</result>";
+				echo "<fileid>$fid</fileid>";
+				//echo "<taskid>$t_id</taskid>";
 			} else {
 				echo "<action>create</action>";
 				echo "<result>2</result>";
 				echo "<msg class='error_msg'>Erro na criacao do arquivo</msg>";
 			}
 			echo $xml_bot;
-			dbclose();
 			die();
 			
 			/*$query = "SELECT * FROM `tzdelugusdata`.`file` WHERE `id` = '" . $_GET['folder'] . "';";
