@@ -16,6 +16,12 @@ if($session){
 } 
 	$main_events_id = '88';		//"Pasta de eventos"
 	
+	
+
+	function import_fb_event($fb_event = null, $parent = null) {
+		//create_file($events['name'], 0, $parent['id'], $attr, $id_event);
+	}
+	
 	function get_user_events($fb_user_id) {
 		global $facebook;
 		$user_events = $facebook->api("$fb_user_id/events");

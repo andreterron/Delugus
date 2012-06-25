@@ -647,6 +647,8 @@ function create_file($name = null, $owner = null, $folder = null, $attr = array(
 	if ((!$name && $identifier == "NULL") || (!$owner && !$folder) {
 		return 0;
 	}
+	// TODO turn $folder from int to obj_array
+	//$folder_id = $folder['id'];
 	dodebug("DEBUG: CREATING ITEM: name =  $name; owner = $owner; folder = $folder;");
 	dbconnect();
 	if ($owner) {
