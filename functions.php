@@ -26,6 +26,122 @@ Procurar sobre browscap.ini para resolver*/
 
 $month_names = array(null, 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
 
+class MetaFile {
+	private static $fileList = array('0' => null);
+	public static getFile($id = '0') {
+		$id = (string) $id;
+		if(!isset($fileList[$id])) {
+			$fileList[$id] = new OODBFile($id);
+		}
+		return $fileList[$id];
+	}
+}
+
+class OODBFile {
+	/**
+	 * OODBFile
+	 *
+	 * This class saves the information related to a specific file
+	 * in our database
+	 *
+	 * @var int $_id stores the database id of the file
+	 * @var array(OODBFile) $_kids stores the kid files
+	 * @var int $_loaded indicates which level is loaded:
+	 * 		0 - only ID
+	 * 		1 - file properties
+	 *		2 - all properties
+	 * @var boolean $_saved false if needs to be saved to DB
+	 *
+	 */
+	private $_id;
+	private $_name;
+	private $_identifier;
+	private $_kids;
+	private $_parents;
+	private $_type;
+	private $_attr;
+	private $_privacy;
+	private $_owner;
+	private $_creation;
+	private $_loaded;
+	private $_saved;
+	
+	
+    public function __construct($id = 0) {
+		$this->_id = $id; // string
+		$this->_name = null; // string
+		$this->_identifier = null; // string
+		$this->_kids = null; // array<OODBFile>
+		$this->_parents = null; // array<OODBFile>
+		$this->_type = null; // array<string>
+		$this->_attr = null; // obj array
+		$this->_privacy = null; // string
+		$this->_owner = null; // string
+		$this->_creation = null; // date string
+		$this->_loaded = 0; // int
+		$this->_saved = true; // boolean;
+	}
+	
+	public function getId() {
+		return $this->_id;
+	}
+	
+	public function getKids() {
+		if ($this->_loaded == 0) {
+			$this->load();
+		}
+		return $this->_kids;
+	}
+	
+	public function load() {
+		// TODO LOAD FROM DB
+		$con = dbconnect();
+		$query = "SELECT * FROM `tzdelugusdata`.`file` WHERE `file`.`id` = $fid;";
+		$result = mysql_query($query, $con);
+		if ($result && $finfo = mysql_fetch_array($result)) {
+			$this->_name = $finfo['name'];
+			$this->_identifier = $finfo['identifier'];
+			$this->_kids = read_str_array($finfo['kids']); // TODO GET OODBFile Array
+			$this->_parents = read_str_array($finfo['parents']); // TODO GET OODBFile Array
+			$this->_type = read_str_array($finfo['type']);; // array<string>
+			$this->_privacy = $finfo['privacy']; // string
+			$this->_owner = $finfo['owner']; // string
+			$this->_creation = $finfo['creation']; // date string
+			// TODO get types parameters
+			$tps = read_str_array($finfo['type']);
+			if ($finfo['creation'] == "0000-00-00 00:00:00") {
+				$this->_attr = array(); // obj array
+				foreach ($tps as $type => $tid) {
+					$query = "SELECT * FROM `tzdelugusdata`.`$type` WHERE `$type`.`id` = $tid;";
+					$result = mysql_query($query, $con);
+					$this->_attr[$type] = array();
+					if ($result && $tp = mysql_fetch_array($result)) {
+						foreach ($tp as $k -> $v) {
+							$this->_attr[$type][$k] = $v;
+						}
+					} else {
+						// ERRO DB TYPE ID Não Encontrado!
+					}
+				}
+			} else {
+				$this->_attr = json_decode($finfo['attr']);
+			}
+		} else {
+			// DB ERROR OR FILE ID NOT FOUND
+			$finfo = null;
+		}
+		dbclose();
+		// END OF LOAD
+		$this->_loaded = 1;
+		$this->_saved = true;
+	}
+	
+	public function save() {
+		// TODO SAVE TO DB
+		$this->_saved = true;
+	}
+}
+
 function dbconnect()
 {
 	global $con;
